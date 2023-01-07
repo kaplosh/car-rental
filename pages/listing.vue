@@ -13,7 +13,9 @@ export default {
 
 <template>
   <div class="container">
-    <header>Car Rental</header>
+    <header class="m-3">
+      Car Rental
+    </header>
     <main>
       <ListingHeader />
       <table class="table table-striped table-bordered m-2">
