@@ -1,12 +1,15 @@
 import { Car } from '~/lib/types';
 
-export const allCars: Car[] = [];
+export const Cars = {
+  list: ref<Car[]>([]),
 
-function addCar (car: Car) {
-  allCars.push(car);
-}
+  add (car: Car) {
+    car.id = String(Cars.list.value.length + 1);
+    Cars.list.value = [ ...Cars.list.value, car ];
+  },
+};
 
-addCar({
+Cars.add({
   id: '1',
   brand: 'Fiat',
   type: 'Punto',
@@ -14,7 +17,7 @@ addCar({
   seats: 4,
 });
 
-addCar({
+Cars.add({
   id: '2',
   brand: 'Tesla',
   type: 'Y',
@@ -22,7 +25,7 @@ addCar({
   seats: 5,
 });
 
-addCar({
+Cars.add({
   id: '3',
   brand: 'Škoda',
   type: 'Octavia',
