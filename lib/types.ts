@@ -5,3 +5,8 @@ export interface Car {
     engine: 'B' | 'N' | 'E';
     seats: number;
 }
+export interface Customer {
+    id: string;
+    firstName: string;
+    lastName: string;
+}
