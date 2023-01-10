@@ -1,11 +1,5 @@
 <script>
-export default {
-  methods: {
-    onAddCar () {
 
-    },
-  },
-};
 </script>
 
 <template>

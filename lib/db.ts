@@ -1,10 +1,12 @@
 import { Car } from '~/lib/types';
+import { onNewId } from '~/lib/id';
 
 export const Cars = {
   list: ref<Car[]>([]),
 
   add (car: Car) {
-    car.id = String(Cars.list.value.length + 1);
+    car.id = onNewId();
+    // car.id = String(Cars.list.value.length + 1);
     Cars.list.value = [ ...Cars.list.value, car ];
   },
 };

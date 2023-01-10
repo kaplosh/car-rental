@@ -1,10 +1,8 @@
 <script lang="ts">
-import { Cars } from '~/lib/db';
 
 export default {
   data () {
     return {
-      allCars: Cars.list,
     };
   },
 
@@ -18,26 +16,7 @@ export default {
     </header>
     <main>
       <ListingHeader />
-      <table class="table table-striped table-bordered m-2">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Manufacturer</th>
-            <th>Type</th>
-            <th>Engine</th>
-            <th>Seats</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="car in allCars" :key="car.id">
-            <td>{{ car.id }}</td>
-            <td>{{ car.brand }}</td>
-            <td>{{ car.type }}</td>
-            <td>{{ car.engine }}</td>
-            <td>{{ car.seats }}</td>
-          </tr>
-        </tbody>
-      </table>
+      <DataTable />
     </main>
   </div>
 </template>

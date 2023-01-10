@@ -13,20 +13,22 @@ export default {
       const c = this as any;
       c.errorMessage = null;
 
-      const formData = new FormData((this as any).$refs.newCarForm);
+      const formData = new FormData(c.$refs.newCarForm);
       const car: any = Object.fromEntries(formData);
       car.seats = Number(car.seats);
 
       console.log(!car.brand);
       if (!car.brand) {
-        (this as any).errorMessage = 'Brand is empty!';
+        c.errorMessage = 'Brand is empty!';
       } else if (!car.type) {
         c.errorMessage = 'Type is empty!';
       } else if (!car.seats) {
         c.errorMessage = 'Seats are not set!';
+      } else if (!car.engine) {
+        c.errorMessage = 'Engine type is not set!';
       }
 
-      if ((this as any).errorMessage) return;
+      if (c.errorMessage) return;
 
       Cars.add(car);
       console.log(car);
