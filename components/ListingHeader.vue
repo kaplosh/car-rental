@@ -11,6 +11,12 @@
       >
         Add Car
       </NuxtLink>
+      <NuxtLink
+        to="/home"
+        class="btn btn-outline-warning ms-3"
+      >
+        Home
+      </NuxtLink>
     </div>
   </div>
 </template>
