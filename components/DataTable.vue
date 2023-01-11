@@ -1,17 +1,19 @@
 <script lang="ts">
 import { Cars } from '~/lib/db';
+import { usedCarIds } from '~/lib/id';
 
 export default {
   data () {
     return {
       allCars: Cars.list,
+      usedCarIds,
     };
   },
   methods: {
     onDelete (index) {
       this.allCars.splice(index, 1);
-      console.log(this.allCars.length);
-      this.allCars = this.allCars.list.value.length + 1;
+      console.log(usedCarIds.find(this.allCars.id));
+      // not good, move to db.ts
     },
   },
 };

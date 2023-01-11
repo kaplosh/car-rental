@@ -17,7 +17,6 @@ export default {
       const car: any = Object.fromEntries(formData);
       car.seats = Number(car.seats);
 
-      console.log(!car.brand);
       if (!car.brand) {
         c.errorMessage = 'Brand is empty!';
       } else if (!car.type) {
@@ -31,7 +30,6 @@ export default {
       if (c.errorMessage) return;
 
       Cars.add(car);
-      console.log(car);
       navigateTo('/listing');
     },
 

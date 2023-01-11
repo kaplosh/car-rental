@@ -5,10 +5,10 @@ export const Cars = {
   list: ref<Car[]>([]),
 
   add (car: Car) {
-    car.id = onNewId();
-    // car.id = String(Cars.list.value.length + 1);
+    car.id = onNewId(5);
     Cars.list.value = [ ...Cars.list.value, car ];
   },
+  // delete car function
 };
 
 Cars.add({
@@ -34,3 +34,4 @@ Cars.add({
   engine: 'N',
   seats: 5,
 });
+// Cars.delete();

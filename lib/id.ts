@@ -1,17 +1,25 @@
-const usedIds: Array<string> = [];
+export const usedCarIds: Array<string> = [];
+const usedCustomerIds: Array<string> = [];
 
-export function onNewId () {
+export function onNewId (length) {
   let newID = '';
-  for (let step = 0; step < 5; step++) {
-    const partOfId = String(Math.floor(Math.random() * 10));
-    newID += partOfId;
+
+  if (length === 5) {
+    for (let step = 0; step < 5; step++) {
+      const partOfId = String(Math.floor(Math.random() * 10));
+      newID += partOfId;
+    }
+    usedCarIds.push(newID);
+    return newID;
+  } else {
+    for (let step = 0; step < 5; step++) {
+      const partOfId = String(Math.floor(Math.random() * 10));
+      newID += partOfId;
+    }
+    usedCustomerIds.push(newID);
+    console.log(newID);
+    return newID;
   }
-  usedIds.push(newID);
-
-  console.log(newID);
-  console.log(usedIds);
-
-  return newID;
 }
 
-onNewId();
+onNewId(length);
