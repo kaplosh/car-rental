@@ -10,10 +10,8 @@ export default {
     };
   },
   methods: {
-    onDelete (index) {
-      this.allCars.splice(index, 1);
-      console.log(usedCarIds.find(this.allCars.id));
-      // not good, move to db.ts
+    onDelete (id) {
+      Cars.delete(id);
     },
   },
 };
@@ -44,7 +42,7 @@ export default {
             <td>{{ car.engine }}</td>
             <td>{{ car.seats }}</td>
             <td>
-              <button class="btn btn-outline-danger" @click="onDelete(index)">
+              <button class="btn btn-outline-danger" @click="onDelete(car.id)">
                 Delete
               </button>
             </td>

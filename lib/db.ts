@@ -1,18 +1,26 @@
 import { Car } from '~/lib/types';
-import { onNewId } from '~/lib/id';
 
 export const Cars = {
-  list: ref<Car[]>([]),
+  list: ref<Readonly<Car[]>>(Object.freeze([])),
+
+  _id: 1,
+  nextId (): string {
+    const value = this._id;
+    this._id += 1;
+    return String(value);
+  },
 
   add (car: Car) {
-    car.id = onNewId(5);
-    Cars.list.value = [ ...Cars.list.value, car ];
+    Cars.list.value = Object.freeze([ ...Cars.list.value, car ]);
   },
-  // delete car function
+
+  delete (id: string) {
+    Cars.list.value = Object.freeze(Cars.list.value.filter(item => item.id !== id));
+  },
 };
 
 Cars.add({
-  id: '1',
+  id: Cars.nextId(),
   brand: 'Fiat',
   type: 'Punto',
   engine: 'B',
@@ -20,7 +28,7 @@ Cars.add({
 });
 
 Cars.add({
-  id: '2',
+  id: Cars.nextId(),
   brand: 'Tesla',
   type: 'Y',
   engine: 'E',
@@ -28,7 +36,7 @@ Cars.add({
 });
 
 Cars.add({
-  id: '3',
+  id: Cars.nextId(),
   brand: 'Škoda',
   type: 'Octavia',
   engine: 'N',

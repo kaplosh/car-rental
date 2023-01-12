@@ -21,5 +21,3 @@ export function onNewId (length) {
     return newID;
   }
 }
-
-onNewId(length);
