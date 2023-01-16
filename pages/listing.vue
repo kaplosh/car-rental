@@ -1,11 +1,11 @@
 <script lang="ts">
 
-import {DataTableColumn} from "~/lib/types";
+import {Car, DataTableColumn} from "~/lib/types";
 
-export default {
+export default Vue.extend({
   data () {
     return {
-      cars: [],
+      cars: [] as Car[],
 
       columns: [
         {
@@ -31,7 +31,7 @@ export default {
     }
   },
 
-};
+});
 </script>
 
 <template>
