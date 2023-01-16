@@ -1,5 +1,4 @@
 <script lang="ts">
-import { Cars } from '~/lib/db';
 
 export default {
   data () {
@@ -9,7 +8,7 @@ export default {
   },
 
   methods: {
-    onSubmit () {
+    async onSubmit () {
       const c = this as any;
       c.errorMessage = null;
 
@@ -29,8 +28,8 @@ export default {
 
       if (c.errorMessage) return;
 
-      Cars.add(car);
-      navigateTo('/listing');
+      const result = await this.$db.create('cars', car);
+      if (result.ok) navigateTo('/listing');
     },
 
   },

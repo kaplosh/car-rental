@@ -1,18 +1,12 @@
 <script lang="ts">
-import { Cars } from '~/lib/db';
-import { usedCarIds } from '~/lib/id';
+
+import { PropType } from 'vue';
+import { DataTableColumn } from '~/lib/types';
 
 export default {
-  data () {
-    return {
-      allCars: Cars.list,
-      usedCarIds,
-    };
-  },
-  methods: {
-    onDelete (id) {
-      Cars.delete(id);
-    },
+  props: {
+    dataset: { type: Array as PropType<any[]>, required: true },
+    columns: { type: Array as PropType<DataTableColumn[]>, required: true },
   },
 };
 </script>
@@ -26,21 +20,26 @@ export default {
       <table class="table table-striped table-bordered m-2">
         <thead>
           <tr>
-            <th>ID</th>
-            <th>Manufacturer</th>
-            <th>Type</th>
-            <th>Engine</th>
-            <th>Seats</th>
+            <th v-for="column in columns" :key="column.name">
+              {{ column.caption ?? column.name }}
+            </th>
+            <!--            <th>ID</th>-->
+            <!--            <th>Manufacturer</th>-->
+            <!--            <th>Type</th>-->
+            <!--            <th>Engine</th>-->
+            <!--            <th>Seats</th>-->
             <th>Actions</th>
           </tr>
         </thead>
         <tbody>
-          <tr v-for="car in allCars" :key="car.id">
-            <td>{{ car.id }}</td>
-            <td>{{ car.brand }}</td>
-            <td>{{ car.type }}</td>
-            <td>{{ car.engine }}</td>
-            <td>{{ car.seats }}</td>
+          <tr v-for="record in dataset" :key="record.id">
+            <td v-for="column in columns" :key="column.name">
+              {{ column.cell(record) }}
+            </td>
+            <!--            <td>{{ car.brand }}</td>-->
+            <!--            <td>{{ car.type }}</td>-->
+            <!--            <td>{{ car.engine }}</td>-->
+            <!--            <td>{{ car.seats }}</td>-->
             <td>
               <button class="btn btn-outline-danger" @click="onDelete(car.id)">
                 Delete

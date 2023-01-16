@@ -10,3 +10,9 @@ export interface Customer {
     firstName: string;
     lastName: string;
 }
+
+export interface DataTableColumn {
+    name: string;
+    caption?: string;
+    cell(record: any): any;
+}
