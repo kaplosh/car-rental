@@ -1,40 +1,41 @@
 <script lang="ts">
 
-export default {
+import { defineComponent } from 'vue';
+
+export default defineComponent({
   data () {
     return {
-      errorMessage: null,
+      errorMessage: null as null | string,
     };
   },
 
   methods: {
     async onSubmit () {
-      const c = this as any;
-      c.errorMessage = null;
+      this.errorMessage = null;
 
-      const formData = new FormData(c.$refs.newCarForm);
+      const formData = new FormData((this as any).$refs.newCarForm);
       const car: any = Object.fromEntries(formData);
       car.seats = Number(car.seats);
 
       if (!car.brand) {
-        c.errorMessage = 'Brand is empty!';
+        this.errorMessage = 'Brand is empty!';
       } else if (!car.type) {
-        c.errorMessage = 'Type is empty!';
+        this.errorMessage = 'Type is empty!';
       } else if (!car.seats) {
-        c.errorMessage = 'Seats are not set!';
+        this.errorMessage = 'Seats are not set!';
       } else if (!car.engine) {
-        c.errorMessage = 'Engine type is not set!';
+        this.errorMessage = 'Engine type is not set!';
       }
 
-      if (c.errorMessage) return;
+      if (this.errorMessage) return;
 
       const result = await this.$db.create('cars', car);
       if (result.ok) navigateTo('/listing');
+      // TODO if not OK, then set errorMessage
     },
 
   },
-};
-
+});
 </script>
 
 <template>

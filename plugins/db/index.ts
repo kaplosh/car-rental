@@ -16,7 +16,7 @@ export default defineNuxtPlugin(() => {
       try {
         assureActive();
         InMemoryDb.createRecord(tableName, data);
-        return Promise.resolve({ ok: false });
+        return Promise.resolve({ ok: true });
       } catch (error) {
         return Promise.resolve({
           ok: false,
@@ -30,7 +30,7 @@ export default defineNuxtPlugin(() => {
         assureActive();
         const records = InMemoryDb.getRecords(tableName);
         return Promise.resolve({
-          ok: false,
+          ok: true,
           data: {
             page: 1,
             perPage: 10,

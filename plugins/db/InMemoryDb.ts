@@ -41,16 +41,20 @@ export const InMemoryDb = {
 };
 
 function parse (): [true, null] | [false, Error] {
+  InMemoryDb.tables = [];
   const data = window.localStorage.getItem(LOCAL_STORAGE_KEY);
+  if (!data) {
+    InMemoryDb.tables.push(new Table('cars'));
+    return [ true, null ];
+  }
+
   try {
-    const tables: Table[] = [];
     const json = JSON.parse(data!);
     json.tables.forEach((data) => {
       const table = new Table(data.name);
       table.items = data.items;
-      tables.push(table);
+      InMemoryDb.tables.push(table);
     });
-    InMemoryDb.tables = tables;
     return [ true, null ];
   } catch (error) {
     return [ false, error ];
