@@ -1,7 +1,7 @@
 <script lang="ts">
 
 import { PropType } from 'vue';
-import { DataTableColumn } from '~/lib/types';
+import { DataTableColumn } from '~/components/DataTable/types';
 
 export default {
   props: {

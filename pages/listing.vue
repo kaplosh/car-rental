@@ -1,13 +1,14 @@
 <script lang="ts">
 
-import {Car, DataTableColumn} from "~/lib/types";
+import { Car } from '~/lib/types';
+import { defineDataTableColumns } from '~/components/DataTable/helpers';
 
-export default Vue.extend({
+export default defineComponent({
   data () {
     return {
       cars: [] as Car[],
 
-      columns: [
+      columns: defineDataTableColumns([
         {
           name: 'id',
           cell: car => car.id,
@@ -17,7 +18,7 @@ export default Vue.extend({
           caption: 'Manufacturer',
           cell: car => car.brand,
         },
-      ] as DataTableColumn[],
+      ]),
     };
   },
 

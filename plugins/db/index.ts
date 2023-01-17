@@ -1,19 +1,9 @@
-interface Record {
-    [attr: string]: any;
-    id: string;
-}
-
-interface Result {
-    ok: boolean;
-    data?: any;
-    error?: any;
-    message?: string;
-}
+import { DbActionResult, DbQueryParams, DbRecord } from '~/plugins/db/types';
 
 export default defineNuxtPlugin(() => {
   const db = Object.freeze({
 
-    create (tableName: string, data: Omit<Record, 'id'>): Promise<Result> {
+    create (tableName: string, data: Omit<DbRecord, 'id'>): Promise<DbActionResult> {
       try {
         return Promise.resolve({ ok: false });
       } catch (error) {
@@ -24,7 +14,7 @@ export default defineNuxtPlugin(() => {
       }
     },
 
-    query (tableName: string, params: any): Promise<Result> {
+    search (tableName: string, params: DbQueryParams = {}): Promise<DbActionResult> {
       return Promise.resolve({
         ok: true,
         data: {
