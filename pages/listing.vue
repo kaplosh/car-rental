@@ -23,12 +23,12 @@ export default defineComponent({
   },
 
   async mounted () {
-    const result = await this.$db.query('cars');
-    console.log(result);
+    const result = await this.$db.search('cars');
     if (result.ok) {
       this.cars = result.data.list;
     } else {
       console.log('spadlo to');
+      console.error(result.error);
     }
   },
 
