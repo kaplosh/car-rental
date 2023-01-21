@@ -15,7 +15,7 @@ export default {
         Kaplosh's Car Rental
       </header>
       <div>
-        <NuxtLink to="/listing" class="btn btn-outline-primary mb-3">
+        <NuxtLink to="/cars/listing" class="btn btn-outline-primary mb-3">
           Car list
         </NuxtLink>
       </div>

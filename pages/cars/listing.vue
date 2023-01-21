@@ -18,6 +18,21 @@ export default defineComponent({
           caption: 'Manufacturer',
           cell: car => car.brand,
         },
+        {
+          name: 'type',
+          caption: 'Type',
+          cell: car => car.type,
+        },
+        {
+          name: 'engine',
+          caption: 'Engine',
+          cell: car => car.engine,
+        },
+        {
+          name: 'seats',
+          caption: 'Number of seats',
+          cell: car => car.seats,
+        },
       ]),
     };
   },

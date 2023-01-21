@@ -23,11 +23,6 @@ export default {
             <th v-for="column in columns" :key="column.name">
               {{ column.caption ?? column.name }}
             </th>
-            <!--            <th>ID</th>-->
-            <!--            <th>Manufacturer</th>-->
-            <!--            <th>Type</th>-->
-            <!--            <th>Engine</th>-->
-            <!--            <th>Seats</th>-->
             <th>Actions</th>
           </tr>
         </thead>

@@ -30,7 +30,11 @@ export default defineComponent({
       if (this.errorMessage) return;
 
       const result = await this.$db.create('cars', car);
-      if (result.ok) navigateTo('/listing');
+      if (result.ok) {
+        navigateTo('/cars/listing')
+      } else {
+        this.errorMessage = result.error.message
+      }
       // TODO if not OK, then set errorMessage
     },
 
@@ -44,7 +48,7 @@ export default defineComponent({
       <form ref="newCarForm">
         <div class="input-group mb-3">
           <span class="input-group-text">Set car manufacturer and type</span>
-          <input id="brandInpuut" type="text" name="brand" placeholder="Manufacturer">
+          <input id="brandInput" type="text" name="brand" placeholder="Manufacturer">
           <input id="typeInput" type="text" name="type" placeholder="Type">
         </div>
         <div class="mb-3">
@@ -82,9 +86,17 @@ export default defineComponent({
         Form is not completed!
         {{ errorMessage }}
       </div>
-      <button type="button" class="btn btn-outline-success mt-3" @click="onSubmit">
-        Create
-      </button>
+      <div class="mt-2 ">
+        <button type="button" class="btn btn-outline-success" @click="onSubmit">
+          Create
+        </button>
+        <NuxtLink
+          to="/cars/listing"
+          class="ms-2 btn btn-outline-primary"
+        >
+          Cancel
+        </NuxtLink>
+      </div>
     </div>
   </div>
 </template>

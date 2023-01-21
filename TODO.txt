@@ -1,7 +1,4 @@
-
-
-- doplnit v tabulce aut všechny sloupečky
-- vypis aut ma byt na adrese `/cars/listing` nikoli `/listing`
+[x] - nikh
 - cesty: '/cars', '/cars/new', 'cars/edit'
 - pokud vytvoreni auta vrati `{ok: false}`, tak vypsat uzivateli alert
 - https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise
