@@ -15,6 +15,7 @@ export const InMemoryDb = {
   },
 
   save () {
+    console.log(serialize())
     window.localStorage.setItem(LOCAL_STORAGE_KEY, serialize());
   },
 

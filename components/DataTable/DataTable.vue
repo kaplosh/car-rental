@@ -30,18 +30,12 @@ function RenderColumn (props) {
             <th v-for="column in columns" :key="column.name">
               {{ column.caption ?? column.name }}
             </th>
-            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
           <tr v-for="record in dataset" :key="record.id">
             <td v-for="column in columns" :key="column.name">
               <render-column :column="column" :data-item="record" />
-            </td>
-            <td>
-              <button class="btn btn-outline-danger" @click="onDelete(car.id)">
-                Delete
-              </button>
             </td>
           </tr>
         </tbody>

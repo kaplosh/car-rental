@@ -3,9 +3,18 @@
 import { Car } from '~/lib/types';
 import { defineDataTableColumns } from '~/components/DataTable/helpers';
 import ThreeRows from '~/components/DataTable/cells/ThreeRows.vue';
+import DataItemActions from '~/components/DataTable/cells/DataItemActions.vue';
 
 export default defineComponent({
   data () {
+    const actions = [
+      {
+        name: 'delete',
+        caption: 'Delete',
+        action: car => this.deleteCar(car),
+      },
+    ];
+
     return {
       cars: [] as Car[],
 
@@ -42,6 +51,10 @@ export default defineComponent({
             return <div>{car.seats}</div>;
           },
         },
+        {
+          name: 'actions',
+          render: car => <DataItemActions car={car} actions={actions} />,
+        },
       ]),
     };
   },
@@ -54,6 +67,13 @@ export default defineComponent({
       console.log('spadlo to');
       console.error(result.error);
     }
+  },
+
+  methods: {
+    deleteCar (car) {
+      // TODO
+      console.log("Funguju", car)
+    },
   },
 
 });
