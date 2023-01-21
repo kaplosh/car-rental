@@ -1,7 +1,8 @@
-<script lang="ts">
+<script lang="tsx">
 
 import { Car } from '~/lib/types';
 import { defineDataTableColumns } from '~/components/DataTable/helpers';
+import ThreeRows from '~/components/DataTable/cells/ThreeRows.vue';
 
 export default defineComponent({
   data () {
@@ -11,27 +12,35 @@ export default defineComponent({
       columns: defineDataTableColumns([
         {
           name: 'id',
-          cell: car => car.id,
+          render (car) {
+            return <div>{car.id}</div>;
+          },
         },
         {
           name: 'manufacturer',
           caption: 'Manufacturer',
-          cell: car => car.brand,
+          render: car => <ThreeRows car={car} />,
         },
         {
           name: 'type',
           caption: 'Type',
-          cell: car => car.type,
+          render (car) {
+            return <div>{car.type}</div>;
+          },
         },
         {
           name: 'engine',
           caption: 'Engine',
-          cell: car => car.engine,
+          render (car) {
+            return <div>{car.engine}</div>;
+          },
         },
         {
           name: 'seats',
           caption: 'Number of seats',
-          cell: car => car.seats,
+          render (car) {
+            return <div>{car.seats}</div>;
+          },
         },
       ]),
     };

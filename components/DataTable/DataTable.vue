@@ -1,14 +1,21 @@
-<script lang="ts">
+<script lang="tsx">
 
 import { PropType } from 'vue';
 import { DataTableColumn } from '~/components/DataTable/types';
 
 export default {
+  components: {
+    RenderColumn,
+  },
   props: {
     dataset: { type: Array as PropType<any[]>, required: true },
     columns: { type: Array as PropType<DataTableColumn[]>, required: true },
   },
 };
+
+function RenderColumn (props) {
+  return props.column.render(props['data-item']);
+}
 </script>
 
 <template>
@@ -29,12 +36,8 @@ export default {
         <tbody>
           <tr v-for="record in dataset" :key="record.id">
             <td v-for="column in columns" :key="column.name">
-              {{ column.cell(record) }}
+              <render-column :column="column" :data-item="record" />
             </td>
-            <!--            <td>{{ car.brand }}</td>-->
-            <!--            <td>{{ car.type }}</td>-->
-            <!--            <td>{{ car.engine }}</td>-->
-            <!--            <td>{{ car.seats }}</td>-->
             <td>
               <button class="btn btn-outline-danger" @click="onDelete(car.id)">
                 Delete
