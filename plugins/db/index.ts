@@ -1,4 +1,4 @@
-import { DbActionResult, DbRecord } from '~/plugins/db/types';
+import { DbResult, DbRecord, DbSearchData } from '~/plugins/db/types';
 import { InMemoryDb } from '~/plugins/db/InMemoryDb';
 
 export default defineNuxtPlugin(() => {
@@ -12,7 +12,28 @@ export default defineNuxtPlugin(() => {
   const db = Object.freeze({
     active,
 
-    create (tableName: string, data: Omit<DbRecord, 'id'>): Promise<DbActionResult> {
+    search (
+      tableName: string,
+    ): Promise<DbResult<DbSearchData>> {
+      try {
+        assureActive();
+        return Promise.resolve({
+          ok: true,
+          data: InMemoryDb.getRecords(tableName),
+        },
+        );
+      } catch (error) {
+        return Promise.resolve({
+          ok: false,
+          error,
+        });
+      }
+    },
+
+    create (
+      tableName: string,
+      data: Omit<DbRecord, 'id'>,
+    ): Promise<DbResult> {
       try {
         assureActive();
         InMemoryDb.createRecord(tableName, data);
@@ -25,20 +46,30 @@ export default defineNuxtPlugin(() => {
       }
     },
 
-    search (tableName: string): Promise<DbActionResult> {
+    update (
+      tableName: string,
+      data: DbRecord,
+    ): Promise<DbResult> {
       try {
         assureActive();
-        const records = InMemoryDb.getRecords(tableName);
+        InMemoryDb.updateRecord(tableName, data);
+        return Promise.resolve({ ok: true });
+      } catch (error) {
         return Promise.resolve({
-          ok: true,
-          data: {
-            page: 1,
-            perPage: 10,
-            total: records.length,
-            list: records.slice(0, 10),
-          },
-        },
-        );
+          ok: false,
+          error,
+        });
+      }
+    },
+
+    delete (
+      tableName: string,
+      id: string,
+    ): Promise<DbResult> {
+      try {
+        assureActive();
+        InMemoryDb.deleteRecord(tableName, id);
+        return Promise.resolve({ ok: true });
       } catch (error) {
         return Promise.resolve({
           ok: false,

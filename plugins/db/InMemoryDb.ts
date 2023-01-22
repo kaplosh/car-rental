@@ -1,4 +1,4 @@
-import { DbRecord } from '~/plugins/db/types';
+import { DbRecord, DbSearchData } from '~/plugins/db/types';
 
 const LOCAL_STORAGE_KEY = 'car-rental:DB-v1-latest';
 
@@ -16,9 +16,15 @@ export const InMemoryDb = {
     window.localStorage.setItem(LOCAL_STORAGE_KEY, serialize());
   },
 
-  getRecords (tableName: string): DbRecord[] {
+  getRecords (tableName: string): DbSearchData {
     const table = getTable(tableName);
-    return table.items.slice(0);
+    const list = table.items.slice(0);
+    return {
+      page: 1,
+      perPage: list.length,
+      total: table.items.length,
+      list,
+    };
   },
 
   createRecord (tableName: string, record: Omit<DbRecord, 'id'>): string {
@@ -29,13 +35,19 @@ export const InMemoryDb = {
     return lastId;
   },
 
-  updateRecord (tableName: string, id: string, record: DbRecord): string {
+  updateRecord (tableName: string, record: DbRecord): void {
     const table = getTable(tableName);
     const recordData = JSON.stringify(record);
-    const result = table.replaceRecord(id, JSON.parse(recordData));
-    if (!result) throw new Error(`db fail: .updateRecord ${tableName} ${id}`);
+    const result = table.replaceRecord(record.id, JSON.parse(recordData));
+    if (!result) throw new Error(`db fail: .updateRecord ${tableName} ${record.id}`);
     InMemoryDb.save();
-    return id;
+  },
+
+  deleteRecord (tableName: string, id: string): void {
+    const table = getTable(tableName);
+    const result = table.removeRecord(id);
+    if (!result) throw new Error(`db fail: .deleteRecord ${tableName} ${id}`);
+    InMemoryDb.save();
   },
 
 };
@@ -67,7 +79,7 @@ function serialize () {
   });
 }
 
-function getTable (name: string): Table {
+function getTable (name: string) {
   const table = InMemoryDb.tables.find(table => table.name === name);
   if (!table) throw new Error('table #{name} not found');
   return table;

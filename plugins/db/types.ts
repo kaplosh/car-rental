@@ -3,11 +3,15 @@ export interface DbRecord {
     id: string;
 }
 
-export interface DbActionResult {
+export interface DbResult<D = any> {
     ok: boolean;
-    data?: any;
+    data?: D;
     error?: any;
-    message?: string;
 }
 
-export type DbQueryParams = Record<string, unknown>;
+export interface DbSearchData<R = any> {
+    page: number;
+    perPage: number;
+    total: number;
+    list: R[];
+}
