@@ -1,17 +1,17 @@
-export interface DbRecord {
-    [attr: string]: any;
-    id: string;
-}
+export type DbQueryParams = Record<string, unknown>;
 
-export interface DbResult<D = any> {
-    ok: boolean;
-    data?: D;
-    error?: any;
-}
+export type DbResult<D = any> =
+    |{ ok: true; data: D }
+    | { ok: false, error: any}
 
 export interface DbSearchData<R = any> {
     page: number;
     perPage: number;
     total: number;
     list: R[];
+}
+
+export interface DbRecord {
+    [attr: string]: any;
+    id: string;
 }

@@ -1,4 +1,4 @@
-import { DbResult, DbRecord, DbSearchData } from '~/plugins/db/types';
+import { DbResult, DbRecord, DbSearchData, DbQueryParams } from '~/plugins/db/types';
 import { InMemoryDb } from '~/plugins/db/InMemoryDb';
 
 export default defineNuxtPlugin(() => {
@@ -14,12 +14,13 @@ export default defineNuxtPlugin(() => {
 
     search (
       tableName: string,
+      params: DbQueryParams = {},
     ): Promise<DbResult<DbSearchData>> {
       try {
         assureActive();
         return Promise.resolve({
           ok: true,
-          data: InMemoryDb.getRecords(tableName),
+          data: InMemoryDb.getRecords(tableName, params),
         },
         );
       } catch (error) {
@@ -37,7 +38,7 @@ export default defineNuxtPlugin(() => {
       try {
         assureActive();
         InMemoryDb.createRecord(tableName, data);
-        return Promise.resolve({ ok: true });
+        return Promise.resolve({ ok: true, data: undefined });
       } catch (error) {
         return Promise.resolve({
           ok: false,
@@ -53,7 +54,7 @@ export default defineNuxtPlugin(() => {
       try {
         assureActive();
         InMemoryDb.updateRecord(tableName, data);
-        return Promise.resolve({ ok: true });
+        return Promise.resolve({ ok: true, data: undefined });
       } catch (error) {
         return Promise.resolve({
           ok: false,
@@ -69,7 +70,7 @@ export default defineNuxtPlugin(() => {
       try {
         assureActive();
         InMemoryDb.deleteRecord(tableName, id);
-        return Promise.resolve({ ok: true });
+        return Promise.resolve({ ok: true, data: undefined });
       } catch (error) {
         return Promise.resolve({
           ok: false,

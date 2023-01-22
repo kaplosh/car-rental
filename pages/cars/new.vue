@@ -66,9 +66,10 @@ export default defineComponent({
         </div>
         <div class="form-check form-check-inline mb-2">
           <input id="flexRadioEngineNafta" class="form-check-input" type="radio" name="engine" value="N">
-          <label class="form-check-label" for="flexRadioEngine">Nafta</label>
+          <label class="form-check-label" for="flexRadioEngineNafta">Nafta</label>
         </div>
         <div class="form-check form-check-inline mb-2">
+          <!-- TODO id inputu musi odpovidat label "for", aby klinuti na lebla byl klik na input-->
           <input id="flexRadioEngineBenzin" class="form-check-input" type="radio" name="engine" value="B">
           <label class="form-check-label" for="flexRadioEngine">Benzin</label>
         </div>

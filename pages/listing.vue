@@ -23,7 +23,7 @@ export default defineComponent({
   },
 
   async mounted () {
-    const result = await this.$db.search('cars');
+    const result = await this.$db.search('cars', { brand: 'sk' });
     if (result.ok) {
       this.cars = result.data.list;
     } else {

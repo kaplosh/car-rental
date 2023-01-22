@@ -1,4 +1,6 @@
-import { DbRecord, DbSearchData } from '~/plugins/db/types';
+import { DbQueryParams, DbRecord, DbSearchData } from '~/plugins/db/types';
+import { mockDb } from '~/lib/records/__mocks/default';
+import { Table } from '~/plugins/db/Table';
 
 const LOCAL_STORAGE_KEY = 'car-rental:DB-v1-latest';
 
@@ -7,7 +9,7 @@ export const InMemoryDb = {
 
   read () {
     InMemoryDb.tables = [];
-    const [ result, error ] = parse();
+    const [ result, error ] = parseOrCreate();
     if (error) console.error(error);
     return result;
   },
@@ -16,12 +18,16 @@ export const InMemoryDb = {
     window.localStorage.setItem(LOCAL_STORAGE_KEY, serialize());
   },
 
-  getRecords (tableName: string): DbSearchData {
+  getRecords (tableName: string, params: DbQueryParams): DbSearchData {
     const table = getTable(tableName);
-    const list = table.items.slice(0);
+    let list = table.filterRecords(params);
+    const page = getPageFromParams(params);
+    const perPage = getPerPageFromParams(params);
+    const start = (page - 1) * perPage;
+    list = list.slice(start, start + perPage);
     return {
-      page: 1,
-      perPage: list.length,
+      page,
+      perPage,
       total: table.items.length,
       list,
     };
@@ -52,11 +58,11 @@ export const InMemoryDb = {
 
 };
 
-function parse (): [true, null] | [false, Error] {
+function parseOrCreate (): [true, null] | [false, Error] {
   InMemoryDb.tables = [];
   const data = window.localStorage.getItem(LOCAL_STORAGE_KEY);
   if (!data) {
-    InMemoryDb.tables.push(new Table('cars'));
+    mockDb();
     return [ true, null ];
   }
 
@@ -85,51 +91,22 @@ function getTable (name: string) {
   return table;
 }
 
-class Table {
-  name: string;
-  items: DbRecord[] = [];
+function getPageFromParams (params: DbQueryParams): number {
+  // TODO
+  // pokud params.page vyplnene
+  // vemu a prevedu na cislo
+  // pokud je vysledek neplatny nebo params.page prazdne
+  // pak jako default vracim 1.
 
-  constructor (name) {
-    this.name = name;
-  }
+  return 1;
+}
 
-  serialize () {
-    return {
-      name: this.name,
-      items: this.items,
-    };
-  }
+function getPerPageFromParams (params: DbQueryParams): number {
+  // TODO
+  // pokud params.perPage vyplnene
+  // vemu a prevedu na cislo
+  // pokud je vysledek neplatny nebo params.perPage prazdne
+  // pak jako default vracim 10.
 
-  nextId (): string {
-    // TODO
-    // najdi nejvetsi id, a pricti k tomu jedna
-    return String(Math.random());
-  }
-
-  addRecord (record): string {
-    record.id = this.nextId();
-    Object.freeze(record);
-    this.items.push(record);
-    return record.id;
-  }
-
-  replaceRecord (id, record): boolean {
-    record.id = id;
-    Object.freeze(record);
-    const index = this.items.findIndex(record => record.id === id);
-    if (index) {
-      this.items[index] = record;
-      return true;
-    }
-    return false;
-  }
-
-  removeRecord (id): boolean {
-    const index = this.items.findIndex(record => record.id === id);
-    if (index) {
-      this.items.splice(index, 1);
-      return true;
-    }
-    return false;
-  }
+  return 10;
 }
