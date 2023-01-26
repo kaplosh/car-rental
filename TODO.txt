@@ -1,9 +1,9 @@
-[x] - nikh
-- cesty: '/cars', '/cars/new', 'cars/edit'
+
+
 - když se nepodaří načíst auta v lsitingu, tak v prvním řádku v tabulce vypsat alert s chybou (takové to červené jako v tom fomrulář)
 - https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise
 - delete auta
 - tiers
 
 - dořešit DB
-- editaace auta
+- editaace auta / cesty: cars/edit' -

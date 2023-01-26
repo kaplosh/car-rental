@@ -10,7 +10,7 @@ export default {
 
 <template>
   <div class="container">
-    <main class="d-flex flex-column position-absolute top-50 start-50">
+    <main class="d-flex flex-column position-absolute top-50 start-50 translate-middle">
       <header class="mb-4">
         Kaplosh's Car Rental
       </header>

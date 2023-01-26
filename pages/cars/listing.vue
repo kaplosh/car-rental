@@ -16,6 +16,7 @@ export default defineComponent({
     ];
 
     return {
+      errorMsg: '',
       cars: [] as Car[],
 
       columns: defineDataTableColumns([
@@ -62,9 +63,10 @@ export default defineComponent({
   async mounted () {
     const result = await this.$db.search('cars', { brand: 'sk' });
     if (result.ok) {
+      this.errorMsg = '';
       this.cars = result.data.list;
     } else {
-      console.log('spadlo to');
+      this.errorMsg = 'Database cannot be loaded!';
       console.error(result.error);
     }
   },
@@ -72,7 +74,7 @@ export default defineComponent({
   methods: {
     deleteCar (car) {
       // TODO
-      console.log("Funguju", car)
+      console.log('Funguju', car);
     },
   },
 
@@ -84,6 +86,9 @@ export default defineComponent({
     <header class="m-3">
       Car Rental
     </header>
+    <div v-if="errorMsg" class="alert alert-danger" role="alert">
+      {{ errorMsg }}
+    </div>
     <main>
       <ListingHeader />
       <DataTable :dataset="cars" :columns="columns" />
