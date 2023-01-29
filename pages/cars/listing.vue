@@ -62,7 +62,7 @@ export default defineComponent({
   },
 
   async mounted () {
-    const result = await this.$db.search('cars', { brand: 'sk' });
+    const result = await this.$db.search('cars');
     if (result.ok) {
       this.errorMsg = '';
       this.cars = result.data.list;
