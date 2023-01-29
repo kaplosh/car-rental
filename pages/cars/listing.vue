@@ -73,9 +73,11 @@ export default defineComponent({
   },
 
   methods: {
+    // TODO definuj typ pro argumentu `car` jako `Car`
     async deleteCar (car) {
-      console.log('Nefunguju', car);
-      const result = await this.$db.delete('cars', car);
+      // TODO BUG
+      const result = await this.$db.delete('cars', car.id);
+      // TODO dokončit (je potřeba znovu "stáhnout" auta)
       if (result) {
         console.log('Jupí');
       } else {
