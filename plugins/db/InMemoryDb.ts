@@ -93,21 +93,29 @@ function getTable (name: string) {
 }
 
 function getPageFromParams (params: DbQueryParams): number {
+  if (params.page) {
+    const page = Number(params.page);
+    return page;
+  } else {
+    return 1;
+  }
   // TODO
   // pokud params.page vyplnene
   // vemu a prevedu na cislo
   // pokud je vysledek neplatny nebo params.page prazdne
   // pak jako default vracim 1.
-
-  return 1;
 }
 
 function getPerPageFromParams (params: DbQueryParams): number {
+  if (params.PerPage) {
+    const perPage = Number(params.PerPage);
+    return perPage;
+  } else {
+    return 10;
+  }
   // TODO
   // pokud params.perPage vyplnene
   // vemu a prevedu na cislo
   // pokud je vysledek neplatny nebo params.perPage prazdne
   // pak jako default vracim 10.
-
-  return 10;
 }

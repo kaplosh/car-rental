@@ -72,9 +72,14 @@ export default defineComponent({
   },
 
   methods: {
-    deleteCar (car) {
-      // TODO
-      console.log('Funguju', car);
+    async deleteCar (car) {
+      console.log('Nefunguju', car);
+      const result = await this.$db.delete('cars', car);
+      if (result) {
+        console.log('Jupí');
+      } else {
+        console.log('Nefunguju', car);
+      }
     },
   },
 
