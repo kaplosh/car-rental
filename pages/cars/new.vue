@@ -31,11 +31,10 @@ export default defineComponent({
 
       const result = await this.$db.create('cars', car);
       if (result.ok) {
-        navigateTo('/cars/listing')
+        navigateTo('/cars/listing');
       } else {
-        this.errorMessage = result.error.message
+        this.errorMessage = result.error.message;
       }
-      // TODO if not OK, then set errorMessage
     },
 
   },

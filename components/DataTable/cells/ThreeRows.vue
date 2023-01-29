@@ -1,18 +1,14 @@
 <script lang="ts">
-import { defineComponent, PropType } from 'vue';
-import { Car } from '~/lib/types';
+import { defineComponent } from 'vue';
 
 export default defineComponent({
-  props: {
-    car: { type: Object as PropType<Car>, required: true },
-  },
 });
 
 </script>
 
 <template>
   <div class="three-rows">
-    {{ car.brand }}
+    <slot />
   </div>
 </template>
 

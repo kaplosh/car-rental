@@ -15,7 +15,7 @@ export const InMemoryDb = {
   },
 
   save () {
-    console.log(serialize())
+    console.log(serialize());
     window.localStorage.setItem(LOCAL_STORAGE_KEY, serialize());
   },
 
@@ -95,27 +95,19 @@ function getTable (name: string) {
 function getPageFromParams (params: DbQueryParams): number {
   if (params.page) {
     const page = Number(params.page);
+    // TODO BUG co kdyz `params = { page: 'kkk' };` ?
     return page;
   } else {
     return 1;
   }
-  // TODO
-  // pokud params.page vyplnene
-  // vemu a prevedu na cislo
-  // pokud je vysledek neplatny nebo params.page prazdne
-  // pak jako default vracim 1.
 }
 
 function getPerPageFromParams (params: DbQueryParams): number {
   if (params.PerPage) {
     const perPage = Number(params.PerPage);
+    // TODO BUG co kdyz `params = { perPage: 'kkk' };` ?
     return perPage;
   } else {
     return 10;
   }
-  // TODO
-  // pokud params.perPage vyplnene
-  // vemu a prevedu na cislo
-  // pokud je vysledek neplatny nebo params.perPage prazdne
-  // pak jako default vracim 10.
 }

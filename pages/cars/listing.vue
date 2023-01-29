@@ -3,11 +3,12 @@
 import { Car } from '~/lib/types';
 import { defineDataTableColumns } from '~/components/DataTable/helpers';
 import ThreeRows from '~/components/DataTable/cells/ThreeRows.vue';
-import DataItemActions from '~/components/DataTable/cells/DataItemActions.vue';
+import ItemActions from '~/components/DataTable/cells/ItemActions.vue';
+import { DataTableItemAction } from '~/components/DataTable/types';
 
 export default defineComponent({
   data () {
-    const actions = [
+    const actions: DataTableItemAction[] = [
       {
         name: 'delete',
         caption: 'Delete',
@@ -29,7 +30,7 @@ export default defineComponent({
         {
           name: 'manufacturer',
           caption: 'Manufacturer',
-          render: car => <ThreeRows car={car} />,
+          render: car => <ThreeRows>{car.brand}</ThreeRows>,
         },
         {
           name: 'type',
@@ -54,7 +55,7 @@ export default defineComponent({
         },
         {
           name: 'actions',
-          render: car => <DataItemActions car={car} actions={actions} />,
+          render: car => <ItemActions item={car} actions={actions} />,
         },
       ]),
     };
