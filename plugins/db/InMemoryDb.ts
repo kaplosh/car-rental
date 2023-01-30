@@ -92,21 +92,25 @@ function getTable (name: string) {
 }
 
 function getPageFromParams (params: DbQueryParams): number {
-  if (params.page) {
-    const page = Number(params.page);
-    // TODO BUG co kdyz `params = { page: 'kkk' };` ?
-    return page;
+  const validParams = [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ];
+  const getPage = Number(params.Page);
+  const found = validParams.includes(getPage);
+
+  if (!found) {
+    return 10;
   } else {
-    return 1;
+    return getPage;
   }
 }
 
 function getPerPageFromParams (params: DbQueryParams): number {
-  if (params.PerPage) {
-    const perPage = Number(params.PerPage);
-    // TODO BUG co kdyz `params = { perPage: 'kkk' };` ?
-    return perPage;
-  } else {
+  const validParams = [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ];
+  const getPerPage = Number(params.perPage);
+  const found = validParams.includes(getPerPage);
+
+  if (!found) {
     return 10;
+  } else {
+    return getPerPage;
   }
 }
