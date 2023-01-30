@@ -9,6 +9,6 @@
 
 
 23-01-29
-- nepouzivej absolutni pozicovani. (pouziti "translate-middle"). nauc se flex-box.
-- oprav `TODO BUG`
+[x] nepouzivej absolutni pozicovani. (pouziti "translate-middle"). nauc se flex-box.
+[x] oprav `TODO BUG`
 - dořeš smazání auta
