@@ -10,17 +10,17 @@ export default {
 
 <template>
   <div class="container">
-    <div class="d-flex vh-100">
-      <main class="d-flex flex-column m-auto align-self-center ">
-        <header class="d-flex mb-4 align-self-center">
+    <div class="d-flex mt-5 justify-content-center">
+      <main class="d-flex flex-column">
+        <header class="mb-4 align-self-center">
           Kaplosh's Car Rental
         </header>
-        <div class="d-flex align-self-center ">
+        <div class="align-self-center ">
           <NuxtLink to="/cars/listing" class="btn btn-outline-primary mb-3">
             Car list
           </NuxtLink>
         </div>
-        <div class="d-flex align-self-center ">
+        <div class="align-self-center ">
           <NuxtLink to="" class="btn btn-outline-primary mb-3">
             Customers
           </NuxtLink>

@@ -43,14 +43,14 @@ export default defineComponent({
 
 <template>
   <div class="container">
-    <div class="position-absolute top-50 start-50 translate-middle">
+    <div class="d-flex mt-5 justify-content-center row">
       <form ref="newCarForm">
-        <div class="input-group mb-3">
+        <div class="input-group mb-3 col">
           <span class="input-group-text">Set car manufacturer and type</span>
           <input id="brandInput" type="text" name="brand" placeholder="Manufacturer">
           <input id="typeInput" type="text" name="type" placeholder="Type">
         </div>
-        <div class="mb-3">
+        <div class="mb-3 col-2">
           <label for="seatSelect">Set a number of seats</label>
           <select id="seatSelect" class="form-select" type="number" name="seats">
             <option value="2">
@@ -67,16 +67,16 @@ export default defineComponent({
             </option>
           </select>
         </div>
-        <div class="form-check form-check-inline mb-2">
+        <div class="form-check form-check-inline mb-2 col">
           <input id="flexRadioEngineNafta" class="form-check-input" type="radio" name="engine" value="N">
           <label class="form-check-label" for="flexRadioEngineNafta">Nafta</label>
         </div>
-        <div class="form-check form-check-inline mb-2">
+        <div class="form-check form-check-inline mb-2 col">
           <!-- TODO id inputu musi odpovidat label "for", aby klinuti na lebla byl klik na input-->
           <input id="flexRadioEngineBenzin" class="form-check-input" type="radio" name="engine" value="B">
           <label class="form-check-label" for="flexRadioEngine">Benzin</label>
         </div>
-        <div class="form-check form-check-inline mb-2">
+        <div class="form-check form-check-inline mb-2 col">
           <input id="flexRadioEngineElectric" class="form-check-input" type="radio" name="engine" value="E">
           <label class="form-check-label" for="flexRadioEngine">Electric</label>
         </div>
@@ -85,7 +85,7 @@ export default defineComponent({
         Form is not completed!
         {{ errorMessage }}
       </div>
-      <div class="mt-2 ">
+      <div class="mt-2 col">
         <button type="button" class="btn btn-outline-success" @click="onSubmit">
           Create
         </button>

@@ -91,51 +91,29 @@ function getTable (name: string) {
   return table;
 }
 
-// TODO
-// v tehle metode mas komentare k tvemu reseni
 function getPageFromParams (params: DbQueryParams): number {
-  // kdyz pouzijes ten regexp je na jednom miste, pak neni potreba davat do promenne.
-  // navic pojmenovavej veci specificky a ne obecne. napr. "ondra" a ne "clovek"
-  const regExp = /[a-zA-Z]/;
-  // tady mas stejne chybku ;-) `params.page`
-  // proc to prevadis na string, kdyz cilem je cislo?
-  const page = String(params.Page);
+  const page = Number(params.Page);
 
-  if (!page) {
-    return 1;
-  }
-
-  if (regExp.test(page)) {
-    // takze kdyz string `page` obsahuje alespon jeden znak 'a' az 'z' nebo 'A' az 'Z', tak chceme stranku 1 ?
+  if (isNaN(page)) {
     return 1;
   } else {
-    // kdyz uz sis predpripravil hodnotu v `page`, proc znova sahas na `params` ?
-    // intellij ti urcite zvyraznilo nasledujici promennou - protoze je zbytecna (nasledujici dva radky maji byt jeden)
-    const getPage = Number(params.Page);
-    return getPage;
+    return page;
   }
 }
 
 // TODO
 // v tehle metode mas postup, ktery naprogramuj
 function getPerPageFromParams (params: DbQueryParams): number {
-  // nejprve preved na cislo
-  // pak zkontroluj jestli to cislo neni "Not-A-Number" - `isNaN`
-  //   je:  = neplatna hodnota, vratit default
-  //   ne:  = mame cislo, woala.
-  // jeste bychom mohli oriznout rozsah, protoze chceme pouze kladna cisla vetsi jak nula
+  const perPage = Number(params.PerPage);
 
-  const regExp = /[a-zA-Z]/;
-  const perPage = String(params.PerPage);
-
-  if (!perPage) {
-    return 1;
-  }
-
-  if (regExp.test(perPage)) {
-    return 1;
+  if (isNaN(perPage)) {
+    return 10;
   } else {
-    const getPerPage = Number(perPage);
-    return getPerPage;
+    return perPage;
   }
 }
+// nejprve preved na cislo
+// pak zkontroluj jestli to cislo neni "Not-A-Number" - `isNaN`
+//   je:  = neplatna hodnota, vratit default
+//   ne:  = mame cislo, woala.
+// jeste bychom mohli oriznout rozsah, protoze chceme pouze kladna cisla vetsi jak nula

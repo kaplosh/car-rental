@@ -6,7 +6,7 @@ export default {
 
 <template>
   <div class="container">
-    <div class="position-absolute top-50 start-50 translate-middle">
+    <div>
       <form ref="newCustomerForm">
         <div class="mb-3">
           <label for="firstNameInput" class="form-label">First name</label>
