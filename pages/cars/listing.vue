@@ -18,6 +18,7 @@ export default defineComponent({
 
     return {
       errorMsg: '',
+      msg: 'Testing msg',
       cars: [] as Car[],
 
       columns: defineDataTableColumns([
@@ -80,6 +81,7 @@ export default defineComponent({
         console.log('Jupí');
       } else {
         console.log('Nefunguju', car);
+        this.errorMsg = 'Delete was not succesful!';
       }
     },
   },
@@ -92,8 +94,8 @@ export default defineComponent({
     <header class="m-3">
       Car Rental
     </header>
-    <div v-if="errorMsg" class="alert alert-danger" role="alert">
-      {{ errorMsg }}
+    <div v-if="msg" class="alert alert-danger" role="alert">
+      {{ msg }}
     </div>
     <main>
       <ListingHeader />

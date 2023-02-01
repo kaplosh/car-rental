@@ -43,7 +43,8 @@ export default defineComponent({
 
 <template>
   <div class="container">
-    <div class="d-flex mt-5 justify-content-center row">
+    <header class="mt-3">Add a new car</header>
+    <div class="d-flex mt-4 justify-content-center row">
       <form ref="newCarForm">
         <div class="input-group mb-3 col">
           <span class="input-group-text">Set car manufacturer and type</span>
