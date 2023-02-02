@@ -10,6 +10,8 @@ export default {
   props: {
     dataset: { type: Array as PropType<any[]>, required: true },
     columns: { type: Array as PropType<DataTableColumn[]>, required: true },
+    error: { type: Boolean },
+    errorMsg: { type: String },
   },
 };
 
@@ -33,6 +35,9 @@ function RenderColumn (props) {
           </tr>
         </thead>
         <tbody>
+          <tr v-if="error">
+            <td>{{ errorMsg }}</td>
+          </tr>
           <tr v-for="record in dataset" :key="record.id">
             <td v-for="column in columns" :key="column.name">
               <render-column :column="column" :data-item="record" />

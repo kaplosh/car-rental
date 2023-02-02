@@ -18,7 +18,7 @@ export default defineComponent({
 
     return {
       errorMsg: '',
-      msg: 'Testing msg',
+      error: false,
       cars: [] as Car[],
 
       columns: defineDataTableColumns([
@@ -71,9 +71,11 @@ export default defineComponent({
       const result = await this.$db.search('cars');
       if (result.ok) {
         this.errorMsg = '';
+        this.error = false;
         this.cars = result.data.list;
       } else {
         this.errorMsg = 'Database cannot be loaded!';
+        this.error = true;
         console.error(result.error);
       }
     },
@@ -104,7 +106,7 @@ export default defineComponent({
     </div>
     <main>
       <ListingHeader />
-      <DataTable :dataset="cars" :columns="columns" />
+      <DataTable :dataset="cars" :columns="columns" :error="error" :error-msg="errorMsg"/>
     </main>
   </div>
 </template>
