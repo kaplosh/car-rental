@@ -21,6 +21,8 @@ export default defineComponent({
       errorMsg: '',
       error: false,
       cars: [] as Car[],
+      filterType: '',
+      customParam: '',
 
       columns: defineDataTableColumns([
         {
@@ -93,6 +95,34 @@ export default defineComponent({
         this.deleteErrorMsg = 'Delete was not succesful!';
       }
     },
+    async filterCars (customParam) {
+      console.log(customParam);
+      if (this.filterType === 'brand') {
+        const result = await this.$db.search('cars', { brand: customParam });
+        console.log(this.filterType);
+        if (result.ok) {
+          await this.fetchData();
+        } else {
+          console.log(result.error);
+        }
+      } else if (this.filterType === 'type') {
+        const result = await this.$db.search('cars', { type: customParam });
+        console.log(this.filterType);
+        if (result.ok) {
+          await this.fetchData();
+        } else {
+          console.log(result.error);
+        }
+      } else if (this.filterType === 'engine') {
+        const result = await this.$db.search('cars', { engine: customParam });
+        console.log(this.filterType);
+        if (result.ok) {
+          await this.fetchData();
+        } else {
+          console.log(result.error);
+        }
+      }
+    },
   },
 
 });
@@ -107,7 +137,55 @@ export default defineComponent({
       {{ deleteErrorMsg }}
     </div>
     <main>
-      <ListingHeader :delete-error-msg="deleteErrorMsg" />
+      <ListingHeader />
+      <div class="mb-3">
+        <div class="form-check form-check-inline row">
+          <label for="exampleFormControlInput1" class="form-label">Filter in</label>
+          <div class="form-check col-12">
+            <input
+              id="brandCheck"
+              v-model="filterType"
+              class="form-check-input"
+              type="radio"
+              value="brand"
+              name="groupOfDefaultRadios"
+            >
+            <label class="form-check-label" for="brandCheck">
+              Brand
+            </label>
+          </div>
+          <div class="form-check col-12">
+            <input
+              id="typeCheck"
+              v-model="filterType"
+              class="form-check-input"
+              type="radio"
+              value="type"
+              name="groupOfDefaultRadios"
+            >
+            <label class="form-check-label" for="typeCheck">
+              Type
+            </label>
+          </div>
+          <div class="form-check col-12">
+            <input
+              id="engineCheck"
+              v-model="filterType"
+              class="form-check-input"
+              type="radio"
+              value="engine"
+              name="groupOfDefaultRadios"
+            >
+            <label class="form-check-label" for="engineCheck">
+              Engine
+            </label>
+          </div>
+        </div>
+        <div class="form-check col-12">
+          <label for="customParam" class="form-check-label mb-1">by</label>
+          <input id="customParam" :value="customParam" class="form-control" placeholder="Input custom parameter.." @input="filterCars">
+        </div>
+      </div>
       <DataTable :dataset="cars" :columns="columns" :error="error" :error-msg="errorMsg" />
     </main>
   </div>
