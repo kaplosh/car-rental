@@ -49,7 +49,7 @@ export class Table {
 
   removeRecord (id): boolean {
     const index = this.items.findIndex(record => record.id === id);
-    if (index) {
+    if (index !== -1) {
       this.items.splice(index, 1);
       return true;
     }
