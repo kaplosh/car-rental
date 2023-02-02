@@ -63,22 +63,27 @@ export default defineComponent({
   },
 
   async mounted () {
-    const result = await this.$db.search('cars');
-    if (result.ok) {
-      this.errorMsg = '';
-      this.cars = result.data.list;
-    } else {
-      this.errorMsg = 'Database cannot be loaded!';
-      console.error(result.error);
-    }
+    await this.fetchData();
   },
 
   methods: {
+    async fetchData () {
+      const result = await this.$db.search('cars');
+      if (result.ok) {
+        this.errorMsg = '';
+        this.cars = result.data.list;
+      } else {
+        this.errorMsg = 'Database cannot be loaded!';
+        console.error(result.error);
+      }
+    },
+
     async deleteCar (car: Car) {
       const result = await this.$db.delete('cars', car.id);
       // TODO dokončit (je potřeba znovu "stáhnout" auta)
-      if (result) {
+      if (result.ok) {
         console.log('Jupí');
+        await this.fetchData();
       } else {
         console.log('Nefunguju', car);
         this.errorMsg = 'Delete was not succesful!';

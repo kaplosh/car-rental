@@ -101,8 +101,6 @@ function getPageFromParams (params: DbQueryParams): number {
   }
 }
 
-// TODO
-// v tehle metode mas postup, ktery naprogramuj
 function getPerPageFromParams (params: DbQueryParams): number {
   const perPage = Number(params.PerPage);
 
@@ -112,8 +110,3 @@ function getPerPageFromParams (params: DbQueryParams): number {
     return perPage;
   }
 }
-// nejprve preved na cislo
-// pak zkontroluj jestli to cislo neni "Not-A-Number" - `isNaN`
-//   je:  = neplatna hodnota, vratit default
-//   ne:  = mame cislo, woala.
-// jeste bychom mohli oriznout rozsah, protoze chceme pouze kladna cisla vetsi jak nula
