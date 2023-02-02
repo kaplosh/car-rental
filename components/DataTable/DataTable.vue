@@ -35,8 +35,8 @@ function RenderColumn (props) {
           </tr>
         </thead>
         <tbody>
-          <tr v-if="error">
-            <td>{{ errorMsg }}</td>
+          <tr v-if="error" class="alert alert-danger  ">
+            <td class="alert alert-danger" :colspan="columns.length">{{ errorMsg }}</td>
           </tr>
           <tr v-for="record in dataset" :key="record.id">
             <td v-for="column in columns" :key="column.name">
