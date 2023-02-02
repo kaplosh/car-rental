@@ -17,6 +17,7 @@ export default defineComponent({
     ];
 
     return {
+      deleteErrorMsg: '',
       errorMsg: '',
       error: false,
       cars: [] as Car[],
@@ -82,13 +83,14 @@ export default defineComponent({
 
     async deleteCar (car: Car) {
       const result = await this.$db.delete('cars', car.id);
-      // TODO dokončit (je potřeba znovu "stáhnout" auta)
+
       if (result.ok) {
-        console.log('Jupí');
+        console.log(result);
         await this.fetchData();
+        this.deleteErrorMsg = '';
       } else {
-        console.log('Nefunguju', car);
-        this.errorMsg = 'Delete was not succesful!';
+        console.log(result.error);
+        this.deleteErrorMsg = 'Delete was not succesful!';
       }
     },
   },
@@ -101,12 +103,12 @@ export default defineComponent({
     <header class="m-3">
       Car Rental
     </header>
-    <div v-if="msg" class="alert alert-danger" role="alert">
-      {{ msg }}
+    <div v-if="deleteErrorMsg" class="alert alert-danger" role="alert">
+      {{ deleteErrorMsg }}
     </div>
     <main>
-      <ListingHeader />
-      <DataTable :dataset="cars" :columns="columns" :error="error" :error-msg="errorMsg"/>
+      <ListingHeader :delete-error-msg="deleteErrorMsg" />
+      <DataTable :dataset="cars" :columns="columns" :error="error" :error-msg="errorMsg" />
     </main>
   </div>
 </template>

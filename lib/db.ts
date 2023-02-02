@@ -42,4 +42,4 @@ Cars.add({
   engine: 'N',
   seats: 5,
 });
-// Cars.delete();
+
