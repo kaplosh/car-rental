@@ -23,6 +23,7 @@ export default defineComponent({
       cars: [] as Car[],
       filterType: '',
       customParam: '',
+      filterState: false,
 
       columns: defineDataTableColumns([
         {
@@ -95,13 +96,14 @@ export default defineComponent({
         this.deleteErrorMsg = 'Delete was not succesful!';
       }
     },
-    async filterCars (customParam) {
+    async filterCars (event) {
+      const customParam = event.target.value;
       console.log(customParam);
       if (this.filterType === 'brand') {
         const result = await this.$db.search('cars', { brand: customParam });
-        console.log(this.filterType);
         if (result.ok) {
-          await this.fetchData();
+          this.cars = result.data.list;
+          console.log(this.cars);
         } else {
           console.log(result.error);
         }
@@ -109,7 +111,7 @@ export default defineComponent({
         const result = await this.$db.search('cars', { type: customParam });
         console.log(this.filterType);
         if (result.ok) {
-          await this.fetchData();
+          this.cars = result.data.list;
         } else {
           console.log(result.error);
         }
@@ -117,11 +119,14 @@ export default defineComponent({
         const result = await this.$db.search('cars', { engine: customParam });
         console.log(this.filterType);
         if (result.ok) {
-          await this.fetchData();
+          this.cars = result.data.list;
         } else {
           console.log(result.error);
         }
       }
+    },
+    setFilters () {
+      this.filterState = !this.filterState;
     },
   },
 
@@ -137,8 +142,8 @@ export default defineComponent({
       {{ deleteErrorMsg }}
     </div>
     <main>
-      <ListingHeader />
-      <div class="mb-3">
+      <ListingHeader @getFilter="setFilters" />
+      <div v-if="filterState" class="mb-3">
         <div class="form-check form-check-inline row">
           <label for="exampleFormControlInput1" class="form-label">Filter in</label>
           <div class="form-check col-12">
@@ -183,7 +188,8 @@ export default defineComponent({
         </div>
         <div class="form-check col-12">
           <label for="customParam" class="form-check-label mb-1">by</label>
-          <input id="customParam" :value="customParam" class="form-control" placeholder="Input custom parameter.." @input="filterCars">
+          <input id="customParam" class="form-control" placeholder="Input custom parameter.." @input="filterCars">
+          <div>{{ customParam }}</div>
         </div>
       </div>
       <DataTable :dataset="cars" :columns="columns" :error="error" :error-msg="errorMsg" />

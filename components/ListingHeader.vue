@@ -1,5 +1,11 @@
 <script>
-
+export default {
+  methods: {
+    getFilter () {
+      this.$emit('getFilter');
+    },
+  },
+};
 </script>
 
 <template>
@@ -17,6 +23,9 @@
       >
         Home
       </NuxtLink>
+      <button class="btn btn-outline-primary ms-3" @click="getFilter">
+        Filter
+      </button>
     </div>
   </div>
 </template>
