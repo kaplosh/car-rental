@@ -71,8 +71,8 @@ export default defineComponent({
   },
 
   methods: {
-    async fetchData () {
-      const result = await this.$db.search('cars');
+    async fetchData (params = {}) {
+      const result = await this.$db.search('cars', params);
       if (result.ok) {
         this.errorMsg = '';
         this.error = false;
@@ -98,32 +98,10 @@ export default defineComponent({
     },
     async filterCars (event) {
       const customParam = event.target.value;
-      console.log(customParam);
-      if (this.filterType === 'brand') {
-        const result = await this.$db.search('cars', { brand: customParam });
-        if (result.ok) {
-          this.cars = result.data.list;
-          console.log(this.cars);
-        } else {
-          console.log(result.error);
-        }
-      } else if (this.filterType === 'type') {
-        const result = await this.$db.search('cars', { type: customParam });
-        console.log(this.filterType);
-        if (result.ok) {
-          this.cars = result.data.list;
-        } else {
-          console.log(result.error);
-        }
-      } else if (this.filterType === 'engine') {
-        const result = await this.$db.search('cars', { engine: customParam });
-        console.log(this.filterType);
-        if (result.ok) {
-          this.cars = result.data.list;
-        } else {
-          console.log(result.error);
-        }
-      }
+      const params: any = {
+        [this.filterType]: customParam,
+      };
+      await this.fetchData(params);
     },
     setFilters () {
       this.filterState = !this.filterState;
