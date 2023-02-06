@@ -1,8 +1,8 @@
 <script>
 export default {
   methods: {
-    getFilter () {
-      this.$emit('getFilter');
+    show () {
+      this.$emit('show');
     },
   },
 };
@@ -23,7 +23,7 @@ export default {
       >
         Home
       </NuxtLink>
-      <button class="btn btn-outline-primary ms-3" @click="getFilter">
+      <button class="btn btn-outline-primary ms-3" @click="show">
         Filter
       </button>
     </div>

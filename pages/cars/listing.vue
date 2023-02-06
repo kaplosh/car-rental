@@ -88,11 +88,9 @@ export default defineComponent({
       const result = await this.$db.delete('cars', car.id);
 
       if (result.ok) {
-        console.log(result);
         await this.fetchData();
         this.deleteErrorMsg = '';
       } else {
-        console.log(result.error);
         this.deleteErrorMsg = 'Delete was not succesful!';
       }
     },
@@ -120,7 +118,7 @@ export default defineComponent({
       {{ deleteErrorMsg }}
     </div>
     <main>
-      <ListingHeader @getFilter="setFilters" />
+      <ListingHeader @show="setFilters" />
       <div v-if="filterState" class="mb-3">
         <div class="form-check form-check-inline row">
           <label for="exampleFormControlInput1" class="form-label">Filter in</label>
