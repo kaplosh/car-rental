@@ -23,6 +23,7 @@ export const InMemoryDb = {
     let list = table.filterRecords(params);
     const page = getPageFromParams(params);
     const perPage = getPerPageFromParams(params);
+    console.log({perPage});
     const start = (page - 1) * perPage;
     list = list.slice(start, start + perPage);
     return {
@@ -92,7 +93,7 @@ function getTable (name: string) {
 }
 
 function getPageFromParams (params: DbQueryParams): number {
-  const page = Number(params.Page);
+  const page = Number(params.page);
 
   if (isNaN(page)) {
     return 1;
@@ -102,7 +103,7 @@ function getPageFromParams (params: DbQueryParams): number {
 }
 
 function getPerPageFromParams (params: DbQueryParams): number {
-  const perPage = Number(params.PerPage);
+  const perPage = Number(params.perPage);
 
   if (isNaN(perPage)) {
     return 10;

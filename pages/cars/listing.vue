@@ -5,8 +5,10 @@ import { defineDataTableColumns } from '~/components/DataTable/helpers';
 import ThreeRows from '~/components/DataTable/cells/ThreeRows.vue';
 import ItemActions from '~/components/DataTable/cells/ItemActions.vue';
 import { DataTableItemAction } from '~/components/DataTable/types';
+import DataTablePagination from '~/components/DataTable/DataTablePagination.vue';
 
 export default defineComponent({
+  components: { DataTablePagination },
   data () {
     const actions: DataTableItemAction[] = [
       {
@@ -22,8 +24,11 @@ export default defineComponent({
       error: false,
       cars: [] as Car[],
       filterType: '',
+      filterValue: '',
       customParam: '',
       filterState: false,
+      result: null as any,
+      totalPages: 0,
 
       columns: defineDataTableColumns([
         {
@@ -66,17 +71,30 @@ export default defineComponent({
     };
   },
 
+  watch: {
+    async filterValue () {
+      const params: any = {
+        [this.filterType]: this.filterValue,
+      };
+      await this.fetchData(params);
+    },
+  },
+
   async mounted () {
     await this.fetchData();
   },
 
   methods: {
-    async fetchData (params = {}) {
+    async fetchData (params: any = {}) {
+      params.perPage = 1;
       const result = await this.$db.search('cars', params);
+      this.result = result;
+      console.log(this.result);
       if (result.ok) {
         this.errorMsg = '';
         this.error = false;
         this.cars = result.data.list;
+        this.totalPages = Math.ceil(result.data.total / result.data.perPage);
       } else {
         this.errorMsg = 'Database cannot be loaded!';
         this.error = true;
@@ -94,15 +112,15 @@ export default defineComponent({
         this.deleteErrorMsg = 'Delete was not succesful!';
       }
     },
-    async filterCars (event) {
-      const customParam = event.target.value;
-      const params: any = {
-        [this.filterType]: customParam,
-      };
-      await this.fetchData(params);
-    },
     setFilters () {
       this.filterState = !this.filterState;
+    },
+    async onPageSelect (page) {
+      const params: any = {
+        [this.filterType]: this.filterValue,
+        page,
+      };
+      await this.fetchData(params);
     },
   },
 
@@ -164,10 +182,11 @@ export default defineComponent({
         </div>
         <div class="form-check col-12">
           <label for="customParam" class="form-check-label mb-1">by</label>
-          <input id="customParam" class="form-control" placeholder="Input custom parameter.." @input="filterCars">
+          <input id="customParam" v-model="filterValue" class="form-control" placeholder="Input custom parameter..">
           <div>{{ customParam }}</div>
         </div>
       </div>
+      <data-table-pagination :total-pages="totalPages" @select="onPageSelect" />
       <DataTable :dataset="cars" :columns="columns" :error="error" :error-msg="errorMsg" />
     </main>
   </div>
