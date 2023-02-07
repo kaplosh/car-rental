@@ -86,7 +86,7 @@ export default defineComponent({
 
   methods: {
     async fetchData (params: any = {}) {
-      params.perPage = 1;
+      params.perPage = 10;
       const result = await this.$db.search('cars', params);
       this.result = result;
       console.log(this.result);
