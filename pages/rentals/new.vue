@@ -14,8 +14,13 @@ export default defineComponent({
       filterState: false,
       result: null as any,
       totalPages: 0,
+      selected: '' as any,
+      customerName: '',
+      firstDay: '' as any,
+      lastDay: '' as any,
     };
   },
+
   async mounted () {
     await this.fetchData();
   },
@@ -38,6 +43,15 @@ export default defineComponent({
         console.error(result.error);
       }
     },
+    logValue () {
+      const selectedCar = this.selected;
+      console.log(selectedCar);
+    },
+    onFirstDaySet () {
+      console.log(this.firstDay);
+      console.log(this.lastDay);
+    },
+
   },
 });
 </script>
@@ -48,14 +62,56 @@ export default defineComponent({
       <form ref="newCustomerForm">
         <div class="mb-3">
           <label for="customerNameInput" class="form-label">Customer name</label>
-          <input id="customerNameInput" type="text" name="customerName" class="form-control">
+          <input id="customerNameInput" type="text" class="form-control">
         </div>
         <div>
-          <select class="form-select" aria-label="Default select example">
-            <option v-for="car in cars" :key="car.id">
-              {{car.id}} -- {{car.brand}}  {{car.type}} -- {{car.seats}} seats
+          <label for="carSelect" class="form-label">Select car</label>
+          <select id="carSelect" v-model="selected" class="form-select" aria-label="Default select example">
+            <option v-for="car in cars" :key="car.id" @click="logValue">
+              {{ car.id }} -- {{ car.brand }}  {{ car.type }} -- {{ car.engine }} -- {{ car.seats }} seats
             </option>
           </select>
+        </div>
+        <div class="d-flex justify-content-center d-inline">
+          <div class="card m-2" style="width: 18rem;">
+            <div class="card-body">
+              <h5 class="card-title">
+                Rental start
+              </h5>
+              <h6 class="card-subtitle mb-2 text-muted">
+                Select a starting day of a rental
+              </h6>
+              <label class="m-1" for="start">Start date:</label>
+              <input
+                id="start"
+                v-model="firstDay"
+                type="date"
+                name="trip-start"
+                min="2018-01-01"
+                max="2018-12-31"
+              >
+            </div>
+          </div>
+          <div class="card m-2" style="width: 18rem;">
+            <div class="card-body">
+              <h5 class="card-title">
+                Rental end
+              </h5>
+              <h6 class="card-subtitle mb-2 text-muted">
+                Select a ending day of a rental
+              </h6>
+              <label class="m-1" for="start">End date:</label>
+              <input
+                id="start"
+                v-model="lastDay"
+                type="date"
+                name="trip-end"
+                min="2018-01-01"
+                max="2018-12-31"
+              >
+            </div>
+          </div>
+          <button class="btn btn-outline-primary" @click="onFirstDaySet">Check date</button>
         </div>
       </form>
       <button type="button" class="btn btn-outline-success mt-3" @click="onSubmit">
