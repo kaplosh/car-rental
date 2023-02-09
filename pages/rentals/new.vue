@@ -13,9 +13,11 @@ export default defineComponent({
       customParam: '',
       filterState: false,
       result: null as any,
+      rentals: [] as any,
+      rental: {} as any,
       totalPages: 0,
       selected: '' as any,
-      customerName: '',
+      customerName: '' as any,
       firstDay: '' as any,
       lastDay: '' as any,
     };
@@ -50,6 +52,17 @@ export default defineComponent({
     onFirstDaySet () {
       console.log(this.firstDay);
       console.log(this.lastDay);
+      const selectedCar = this.selected;
+
+      this.rental = {
+        start: this.firstDay,
+        end: this.lastDay,
+        name: this.customerName,
+        car: selectedCar,
+      };
+      console.log(this.rental);
+      this.rentals.push(this.rental);
+      console.log(this.rentals);
     },
 
   },
@@ -62,7 +75,7 @@ export default defineComponent({
       <form ref="newCustomerForm">
         <div class="mb-3">
           <label for="customerNameInput" class="form-label">Customer name</label>
-          <input id="customerNameInput" type="text" class="form-control">
+          <input v-model="customerName" id="customerNameInput" type="text" class="form-control">
         </div>
         <div>
           <label for="carSelect" class="form-label">Select car</label>
@@ -88,7 +101,7 @@ export default defineComponent({
                 type="date"
                 name="trip-start"
                 min="2018-01-01"
-                max="2018-12-31"
+                max="2023-12-31"
               >
             </div>
           </div>
@@ -111,7 +124,9 @@ export default defineComponent({
               >
             </div>
           </div>
-          <button class="btn btn-outline-primary" @click="onFirstDaySet">Check date</button>
+          <button class="btn btn-outline-primary" @click="onFirstDaySet">
+            Check date
+          </button>
         </div>
       </form>
       <button type="button" class="btn btn-outline-success mt-3" @click="onSubmit">
