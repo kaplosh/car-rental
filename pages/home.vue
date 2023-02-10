@@ -18,8 +18,8 @@ export default {
           <NuxtLink to="/cars/listing" class="btn btn-outline-primary mb-3">
             Car list
           </NuxtLink>
-          <NuxtLink to="" class="btn btn-outline-primary mb-3">
-            Customers
+          <NuxtLink to="/rentals/new" class="btn btn-outline-primary mb-3">
+            Rentals
           </NuxtLink>
       </main>
     </div>

@@ -18,8 +18,8 @@ export default defineComponent({
       totalPages: 0,
       selected: '' as any,
       customerName: '' as any,
-      firstDay: '' as any,
-      lastDay: '' as any,
+      firstDate: '' as any,
+      secondDate: '' as any,
     };
   },
 
@@ -45,13 +45,25 @@ export default defineComponent({
         console.error(result.error);
       }
     },
-    logValue () {
-      const selectedCar = this.selected;
-      console.log(selectedCar);
-    },
+
     onFirstDaySet () {
-      console.log(this.firstDay);
-      console.log(this.lastDay);
+      console.log(this.firstDate);
+      const firstParseDate = this.firstDate.split('-');
+
+      const firstMonth = Number(firstParseDate[1]);
+      const firstDay = Number(firstParseDate[2]);
+
+      console.log(firstMonth);
+      console.log(firstDay);
+
+      const secondParseDate = this.secondDate.split('-');
+
+      const secondMonth = Number(secondParseDate[1]);
+      const secondDay = Number(secondParseDate[2]);
+
+      console.log(secondMonth);
+      console.log(secondDay);
+
       const selectedCar = this.selected;
 
       this.rental = {
@@ -75,7 +87,7 @@ export default defineComponent({
       <form ref="newCustomerForm">
         <div class="mb-3">
           <label for="customerNameInput" class="form-label">Customer name</label>
-          <input v-model="customerName" id="customerNameInput" type="text" class="form-control">
+          <input id="customerNameInput" v-model="customerName" type="text" class="form-control">
         </div>
         <div>
           <label for="carSelect" class="form-label">Select car</label>
@@ -97,7 +109,7 @@ export default defineComponent({
               <label class="m-1" for="start">Start date:</label>
               <input
                 id="start"
-                v-model="firstDay"
+                v-model="firstDate"
                 type="date"
                 name="trip-start"
                 min="2018-01-01"
@@ -116,7 +128,7 @@ export default defineComponent({
               <label class="m-1" for="start">End date:</label>
               <input
                 id="start"
-                v-model="lastDay"
+                v-model="secondDate"
                 type="date"
                 name="trip-end"
                 min="2018-01-01"
