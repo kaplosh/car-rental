@@ -66,6 +66,10 @@ export default defineComponent({
 
       const selectedCar = this.selected;
 
+      if (selectedCar === this.rentals.rental.car) {
+
+      }
+
       this.rental = {
         start: this.firstDay,
         end: this.lastDay,
