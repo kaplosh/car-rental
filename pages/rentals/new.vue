@@ -47,32 +47,40 @@ export default defineComponent({
     },
 
     onFirstDaySet () {
-      console.log(this.firstDate);
       const firstParseDate = this.firstDate.split('-');
 
-      const firstMonth = Number(firstParseDate[1]);
-      const firstDay = Number(firstParseDate[2]);
-
-      console.log(firstMonth);
-      console.log(firstDay);
+      const newFirstMonth = Number(firstParseDate[1]);
+      const newFirstDay = Number(firstParseDate[2]);
 
       const secondParseDate = this.secondDate.split('-');
 
-      const secondMonth = Number(secondParseDate[1]);
-      const secondDay = Number(secondParseDate[2]);
-
-      console.log(secondMonth);
-      console.log(secondDay);
+      const newSecondMonth = Number(secondParseDate[1]);
+      const newSecondDay = Number(secondParseDate[2]);
 
       const selectedCar = this.selected;
 
-      if (selectedCar === this.rentals.rental.car) {
+      const isCar = this.rentals.some(rental => rental.car);
 
+      if (selectedCar && isCar) {
+        console.log('Matching cars');
+        if (newFirstMonth === newSecondMonth && this.rentals.rental.firstMonth === this.rentals.rental.secondMonth) {
+          for (const rental of this.rentals) {
+            if (newFirstDay >= this.rentals.rental.firstDay && newFirstDay <= this.rentals.rental.secondDay) {
+              return;
+            } else if (newSecondDay >= this.rental.firstDay && newSecondDay <= this.rentals.rental.secondDay) {
+              return;
+            } else if (newFirstDay === this.rentals.rental.firstDay && newSecondDay === this.rentals.rental.secondDay) {
+              return;
+            }
+          }
+        }
       }
 
       this.rental = {
-        start: this.firstDay,
-        end: this.lastDay,
+        firstDay: newFirstDay,
+        firstMonth: newFirstMonth,
+        secondMonth: newSecondMonth,
+        secondDay: newSecondDay,
         name: this.customerName,
         car: selectedCar,
       };
