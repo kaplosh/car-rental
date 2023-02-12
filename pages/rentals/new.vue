@@ -63,13 +63,17 @@ export default defineComponent({
 
       if (selectedCar && isCar) {
         console.log('Matching cars');
+
         if (newFirstMonth === newSecondMonth && this.rentals.rental.firstMonth === this.rentals.rental.secondMonth) {
-          for (const rental of this.rentals) {
-            if (newFirstDay >= this.rentals.rental.firstDay && newFirstDay <= this.rentals.rental.secondDay) {
+          for (const item of this.rentals) {
+            if (newFirstDay >= item.firstDay && newFirstDay <= item.secondDay) {
+              this.errorMsg = 'Junda';
               return;
-            } else if (newSecondDay >= this.rental.firstDay && newSecondDay <= this.rentals.rental.secondDay) {
+            } else if (newSecondDay >= item.firstDay && newSecondDay <= item.secondDay) {
+              this.errorMsg = 'Junda';
               return;
-            } else if (newFirstDay === this.rentals.rental.firstDay && newSecondDay === this.rentals.rental.secondDay) {
+            } else if (newFirstDay === item.firstDay && newSecondDay === item.secondDay) {
+              this.errorMsg = 'Junda';
               return;
             }
           }
@@ -153,6 +157,7 @@ export default defineComponent({
           </button>
         </div>
       </form>
+      <div v-if="errorMsg">{{errorMsg}}</div>
       <button type="button" class="btn btn-outline-success mt-3" @click="onSubmit">
         Create
       </button>
