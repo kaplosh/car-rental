@@ -8,12 +8,12 @@ export default defineComponent({
       errorMsg: '',
       error: false,
       cars: [] as Car[],
+      rentals: [] as Rental[],
       filterType: '',
       filterValue: '',
       customParam: '',
       filterState: false,
       result: null as any,
-      rentals: [] as any,
       rental: {} as any,
       totalPages: 0,
       selected: '' as any,
@@ -47,7 +47,7 @@ export default defineComponent({
     },
 
     onFirstDaySet () {
-      const firstParseDate = this.firstDate.split('-');
+      /* const firstParseDate = this.firstDate.split('-');
 
       const newFirstMonth = Number(firstParseDate[1]);
       const newFirstDay = Number(firstParseDate[2]);
@@ -78,21 +78,23 @@ export default defineComponent({
             }
           }
         }
-      }
+      } */
 
-      this.rental = {
+      /* this.rental = {
         firstDay: newFirstDay,
         firstMonth: newFirstMonth,
         secondMonth: newSecondMonth,
         secondDay: newSecondDay,
         name: this.customerName,
         car: selectedCar,
-      };
-      console.log(this.rental);
-      this.rentals.push(this.rental);
-      console.log(this.rentals);
-    },
+      }; */
 
+      const formData = new FormData((this as any).$refs.newRentalForm);
+      const rental: any = Object.fromEntries(formData);
+
+      const result = await this.$db.create('rentals', rental);
+      console.log(rental);
+    },
   },
 });
 </script>
@@ -100,14 +102,14 @@ export default defineComponent({
 <template>
   <div class="container">
     <div>
-      <form ref="newCustomerForm">
+      <form ref="newRentalForm">
         <div class="mb-3">
           <label for="customerNameInput" class="form-label">Customer name</label>
           <input id="customerNameInput" value="name" type="text" class="form-control">
         </div>
         <div>
           <label for="carSelect" class="form-label">Select car</label>
-          <select id="carSelect" v-model="selected" class="form-select" aria-label="Default select example">
+          <select id="carSelect" class="form-select" aria-label="Default select example">
             <option v-for="car in cars" :key="car.id" value="car">
               {{ car.id }} -- {{ car.brand }}  {{ car.type }} -- {{ car.engine }} -- {{ car.seats }} seats
             </option>

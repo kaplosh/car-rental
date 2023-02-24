@@ -6,6 +6,7 @@ export interface Car {
     seats: number;
 }
 export interface Rental {
+    id: string;
     name: string;
     car: string;
     start: string;
