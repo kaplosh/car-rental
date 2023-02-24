@@ -79,11 +79,13 @@ export default defineComponent({
       const newSecondMonth = Number(secondParseDate[1]);
       const newSecondDay = Number(secondParseDate[2]);
 
-      const selectedCar = rental.id;
+      const selectedCar: any = rental.id;
+      console.log(selectedCar)
 
       const params: any = {
-        id: this.rental.id,
+        id: rental.id,
       };
+      console.log(params)
       const isCar: any = await this.fetchRentalsData(params);
 
       if (selectedCar && isCar) {
