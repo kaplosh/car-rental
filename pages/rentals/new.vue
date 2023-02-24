@@ -24,24 +24,39 @@ export default defineComponent({
   },
 
   async mounted () {
-    await this.fetchData();
+    await this.fetchCarData();
+    await this.fetchRentalsData();
   },
 
   methods: {
-    async fetchData (params: any = {}) {
+    async fetchCarData (params: any = {}) {
       params.perPage = 10;
-      const carsResult = await this.$db.search('cars', params);
-      const rentalsResult = await this.$db.search('rentals');
-      this.result = carsResult && rentalsResult;
+      const result = await this.$db.search('cars', params);
+      this.result = result;
       console.log(this.result);
-      if (carsResult.ok && rentalsResult.ok) {
+      if (result.ok) {
         this.errorMsg = '';
         this.error = false;
-        this.cars = carsResult.data.list;
-        this.rentals = rentalsResult.data.list;
-        console.log(this.rentals);
+        this.cars = result.data.list;
         console.log(this.cars);
-        this.totalPages = Math.ceil(rentalsResult.data.total / rentalsResult.data.perPage);
+        this.totalPages = Math.ceil(result.data.total / result.data.perPage);
+      } else {
+        this.errorMsg = 'Database cannot be loaded!';
+        this.error = true;
+        console.error(this.result.error);
+      }
+    },
+    async fetchRentalsData (params: any = {}) {
+      params.perPage = 10;
+      const result = await this.$db.search('rentals', params);
+      this.result = result;
+      console.log(this.result);
+      if (result.ok) {
+        this.errorMsg = '';
+        this.error = false;
+        this.rentals = result.data.list;
+        console.log(this.rentals);
+        this.totalPages = Math.ceil(result.data.total / result.data.perPage);
       } else {
         this.errorMsg = 'Database cannot be loaded!';
         this.error = true;
@@ -54,19 +69,22 @@ export default defineComponent({
       console.log(formData);
       const rental: any = Object.fromEntries(formData);
 
-      const firstParseDate = rental.start.split('-');
+      const firstParseDate = rental.startDate.split('-');
 
       const newFirstMonth = Number(firstParseDate[1]);
       const newFirstDay = Number(firstParseDate[2]);
 
-      const secondParseDate = rental.end.split('-');
+      const secondParseDate = rental.endingDate.split('-');
 
       const newSecondMonth = Number(secondParseDate[1]);
       const newSecondDay = Number(secondParseDate[2]);
 
-      const selectedCar = rental.car;
+      const selectedCar = rental.id;
 
-      const isCar = this.rentals.some(rental => rental.car);
+      const params: any = {
+        id: this.rental.id,
+      };
+      const isCar: any = await this.fetchRentalsData(params);
 
       if (selectedCar && isCar) {
         console.log('Matching cars');
@@ -94,7 +112,7 @@ export default defineComponent({
         secondDay: newSecondDay,
         name: this.customerName,
         car: selectedCar,
-      };*/
+      }; */
 
       const result = await this.$db.create('rentals', rental);
       if (result.ok) {

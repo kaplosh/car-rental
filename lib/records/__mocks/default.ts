@@ -13,4 +13,5 @@ export function mockDb () {
   const rentals = new Table('rentals');
   InMemoryDb.tables.push(rentals);
   rentals.items.push({ id: cars.nextId(), name: 'Aleš Vocílka', car: 'Ford Exort', start: '04-08-2020', end: '04-15-2020' });
+  rentals.filters.push({ name: 'id', filter: { type: 'includes' } });
 }
