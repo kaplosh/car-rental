@@ -1,5 +1,5 @@
 <script lang="tsx">
-import { Car } from '~/lib/types';
+import { Car, Rental } from '~/lib/types';
 
 export default defineComponent({
   data () {
@@ -103,12 +103,12 @@ export default defineComponent({
       <form ref="newCustomerForm">
         <div class="mb-3">
           <label for="customerNameInput" class="form-label">Customer name</label>
-          <input id="customerNameInput" v-model="customerName" type="text" class="form-control">
+          <input id="customerNameInput" value="name" type="text" class="form-control">
         </div>
         <div>
           <label for="carSelect" class="form-label">Select car</label>
           <select id="carSelect" v-model="selected" class="form-select" aria-label="Default select example">
-            <option v-for="car in cars" :key="car.id" @click="logValue">
+            <option v-for="car in cars" :key="car.id" value="car">
               {{ car.id }} -- {{ car.brand }}  {{ car.type }} -- {{ car.engine }} -- {{ car.seats }} seats
             </option>
           </select>
@@ -125,7 +125,7 @@ export default defineComponent({
               <label class="m-1" for="start">Start date:</label>
               <input
                 id="start"
-                v-model="firstDate"
+                value="start"
                 type="date"
                 name="trip-start"
                 min="2018-01-01"
@@ -144,7 +144,7 @@ export default defineComponent({
               <label class="m-1" for="start">End date:</label>
               <input
                 id="start"
-                v-model="secondDate"
+                value="end"
                 type="date"
                 name="trip-end"
                 min="2018-01-01"
@@ -157,7 +157,9 @@ export default defineComponent({
           </button>
         </div>
       </form>
-      <div v-if="errorMsg">{{errorMsg}}</div>
+      <div v-if="errorMsg">
+        {{ errorMsg }}
+      </div>
       <button type="button" class="btn btn-outline-success mt-3" @click="onSubmit">
         Create
       </button>

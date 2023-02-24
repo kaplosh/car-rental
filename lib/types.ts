@@ -5,3 +5,10 @@ export interface Car {
     engine: 'B' | 'N' | 'E';
     seats: number;
 }
+export interface Rental {
+    name: string;
+    car: string;
+    start: string;
+    end: string;
+
+}
